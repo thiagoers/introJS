@@ -26,15 +26,13 @@ for (paciente of pacientes) {
     }
 
     if ( truePeso && trueAltura){
-        var imc = peso / (altura * altura)
-        
-        tdImc.textContent = imc.toFixed(2)   
+        var imc = calculaIMC(peso, altura)      
+        tdImc.textContent = imc   
     } 
 }
 
-
-/*function IMC (altura, peso) {
-    var result = altura * peso
-    return result
-}*/
-
+function calculaIMC (peso, altura){
+    var imc = 0
+    imc = peso / (altura * altura)
+    return imc.toFixed(2)
+}
