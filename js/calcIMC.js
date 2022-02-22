@@ -1,6 +1,3 @@
-var title = document.querySelector('h1');
-console.log(title.textContent);
-
 var pacientes = document.querySelectorAll('.paciente')
 
 for (paciente of pacientes) {

@@ -6,6 +6,14 @@ button.addEventListener('click', (event) => {
     var form = document.querySelector('#addForm')
     
     var patient = obtemPacienteDoForm(form)
+
+    var erros = validaCampos(patient)
+    console.log(erros)
+
+    if(erros.length > 0){
+        exibeErros(erros)
+        return
+    }
     
     var patientTr = buildTr(patient)    
 
@@ -15,6 +23,37 @@ button.addEventListener('click', (event) => {
     form.reset()
 
 })
+
+function exibeErros (erros) {
+    var ul = document.querySelector("#mensagens-erros")
+    erros.forEach((erro) => {
+        var li = document.createElement('li')
+        li.textContent = erro
+        ul.appendChild(li)
+    })
+}
+
+function validaCampos(patient) {
+    var erros = []
+
+    if (patient.name.length == 0) {
+        erros.push("Nome não pode ser em branco!")
+    }
+
+    if(patient.weight.length == 0){
+        erros.push("Peso não pode ser em branco!")
+    }
+
+    if(patient.height.length == 0){
+        erros.push("Altura não pode ser em branco!")
+    }
+
+    if(patient.fat.length == 0){
+        erros.push("% de Gordura não pode ser em branco!")
+    }
+
+    return erros
+}
 
 function obtemPacienteDoForm (form){
     var patient = {
