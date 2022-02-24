@@ -13,19 +13,22 @@ button.addEventListener('click', (event) => {
     if(erros.length > 0){
         exibeErros(erros)
         return
-    }
+    }    
     
     var patientTr = buildTr(patient)    
-
+    
     var table = document.querySelector('#tabela-pacientes')
     table.appendChild(patientTr)
-
+    
     form.reset()
-
+    
+    var ul = document.querySelector("#mensagens-erros")
+    ul.innerHTML = ""
 })
 
 function exibeErros (erros) {
     var ul = document.querySelector("#mensagens-erros")
+    ul.innerHTML = ""
     erros.forEach((erro) => {
         var li = document.createElement('li')
         li.textContent = erro
@@ -40,14 +43,14 @@ function validaCampos(patient) {
         erros.push("Nome não pode ser em branco!")
     }
 
-    if(patient.weight.length == 0){
-        erros.push("Peso não pode ser em branco!")
+    if (!validaPeso(patient.weight) || patient.weight.length == 0) {
+        erros.push("Peso incorreto!")
     }
 
-    if(patient.height.length == 0){
-        erros.push("Altura não pode ser em branco!")
+    if (!validaAltura(patient.height) || patient.height.length == 0) {
+        erros.push("Altura incorreta!")
     }
-
+    
     if(patient.fat.length == 0){
         erros.push("% de Gordura não pode ser em branco!")
     }
