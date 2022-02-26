@@ -8,7 +8,6 @@ button.addEventListener('click', (event) => {
     var patient = obtemPacienteDoForm(form)
 
     var erros = validaCampos(patient)
-    console.log(erros)
 
     if(erros.length > 0){
         exibeErros(erros)
