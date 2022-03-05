@@ -5,25 +5,29 @@ button.addEventListener('click', (event) => {
     event.preventDefault()    
     var form = document.querySelector('#addForm')
     
-    var patient = obtemPacienteDoForm(form)
+    var paciente = obtemPacienteDoForm(form)
 
-    var erros = validaCampos(patient)
+    var erros = validaCampos(paciente)
 
     if(erros.length > 0){
         exibeErros(erros)
         return
     }    
     
-    var patientTr = buildTr(patient)    
-    
-    var table = document.querySelector('#tabela-pacientes')
-    table.appendChild(patientTr)
+    addPacienteNaTabela(paciente)
     
     form.reset()
     
     var ul = document.querySelector("#mensagens-erros")
     ul.innerHTML = ""
 })
+
+function addPacienteNaTabela(paciente){
+    var pacienteTr = buildTr(paciente)    
+    
+    var table = document.querySelector('#tabela-pacientes')
+    table.appendChild(pacienteTr)
+}
 
 function exibeErros (erros) {
     var ul = document.querySelector("#mensagens-erros")
@@ -35,22 +39,22 @@ function exibeErros (erros) {
     })
 }
 
-function validaCampos(patient) {
+function validaCampos(paciente) {
     var erros = []
 
-    if (patient.name.length == 0) {
+    if (paciente.nome.length == 0) {
         erros.push("Nome não pode ser em branco!")
     }
 
-    if (!validaPeso(patient.weight) || patient.weight.length == 0) {
+    if (!validaPeso(paciente.peso) || paciente.peso.length == 0) {
         erros.push("Peso incorreto!")
     }
 
-    if (!validaAltura(patient.height) || patient.height.length == 0) {
+    if (!validaAltura(paciente.altura) || paciente.altura.length == 0) {
         erros.push("Altura incorreta!")
     }
     
-    if(patient.fat.length == 0){
+    if(paciente.gordura.length == 0){
         erros.push("% de Gordura não pode ser em branco!")
     }
 
@@ -58,27 +62,27 @@ function validaCampos(patient) {
 }
 
 function obtemPacienteDoForm (form){
-    var patient = {
-        name: form.nome.value,
-        weight: form.peso.value,
-        height: form.altura.value,
-        fat: form.gordura.value,
+    var paciente = {
+        nome: form.nome.value,
+        peso: form.peso.value,
+        altura: form.altura.value,
+        gordura: form.gordura.value,
         imc: calculaIMC(form.peso.value, form.altura.value)
     }
-    return patient
+    return paciente
 }
 
-function buildTr (patient){
-    var patientTr = document.createElement('tr')
-    patientTr.classList.add('paciente')
+function buildTr (paciente){
+    var pacienteTr = document.createElement('tr')
+    pacienteTr.classList.add('paciente')
 
-    patientTr.appendChild(buildTd(patient.name, "info-nome"))
-    patientTr.appendChild(buildTd(patient.weight, 'info-peso'))
-    patientTr.appendChild(buildTd(patient.height, 'info-altura'))
-    patientTr.appendChild(buildTd(patient.fat, 'info-gordura'))
-    patientTr.appendChild(buildTd(patient.imc))
+    pacienteTr.appendChild(buildTd(paciente.nome, "info-nome"))
+    pacienteTr.appendChild(buildTd(paciente.peso, 'info-peso'))
+    pacienteTr.appendChild(buildTd(paciente.altura, 'info-altura'))
+    pacienteTr.appendChild(buildTd(paciente.gordura, 'info-gordura'))
+    pacienteTr.appendChild(buildTd(paciente.imc))
 
-    return patientTr
+    return pacienteTr
 }
 
 function buildTd (dado, classe) {
